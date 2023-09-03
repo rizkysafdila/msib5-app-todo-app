@@ -65,7 +65,7 @@ export const useTodoStore = defineStore('todo', {
             completed: false,
           })
           this.todos.unshift(response.data)
-          this.filteredTodos = this.todos
+          // this.filteredTodos = this.todos
           this.title = ''
           this.isLoading = false
         } else {
