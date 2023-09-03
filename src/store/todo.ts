@@ -18,11 +18,13 @@ export const useTodoStore = defineStore('todo', {
     todos: TTodo[],
     filteredTodos: TTodo[],
     filterMode: string,
+    title: string,
     isLoading: boolean,
   } => ({
     todos: [],
     filteredTodos: [],
     filterMode: 'all',
+    title: '',
     isLoading: false,
   }),
   getters: {
@@ -53,18 +55,22 @@ export const useTodoStore = defineStore('todo', {
       }
     },
     
-    async addTodo(newTitle: string) {
+    async addTodo() {
       try {
-        this.isLoading = true
-        const response = await axios.post(API_URL, {
-          userId: 1,
-          id: this.todos.length + 1,
-          title: newTitle,
-          completed: false,
-        })
-        this.todos.unshift(response.data)
-        this.filteredTodos = this.todos
-        this.isLoading = false
+        if (this.title !== '') {
+          this.isLoading = true
+          const response = await axios.post(API_URL, {
+            userId: 1,
+            title: this.title,
+            completed: false,
+          })
+          this.todos.unshift(response.data)
+          this.filteredTodos = this.todos
+          this.title = ''
+          this.isLoading = false
+        } else {
+          window.alert('Please fill the title!')
+        }
       } catch (error) {
         console.error('Error adding todo:', error)
       }
