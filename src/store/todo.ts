@@ -1,25 +1,35 @@
+// Pinia
 import { defineStore } from 'pinia'
+
+// Axios
 import axios from 'axios'
 
-const API_URL = 'https://jsonplaceholder.typicode.com/todos'
+// Type Todo
+import { TTodo } from './todo.type'
 
-export interface TTodo {
-  userId: number
-  id: number
-  title: string
-  completed: boolean
-}
+// API URL
+const API_URL = 'https://jsonplaceholder.typicode.com/todos'
 
 export const useTodoStore = defineStore('todo', {
   state: (): {
     todos: TTodo[],
+    filteredTodos: TTodo[],
+    filterMode: string,
   } => ({
     todos: [],
+    filteredTodos: [],
+    filterMode: 'all',
   }),
   getters: {
-    completedTodosCount: (state) => {
-      return state.todos.filter(todo => todo.completed).length
+    getActiveTodos: (state) => {
+      return state.todos.filter((todo) => !todo.completed)
     },
+    getCompletedTodos: (state) => {
+      return state.todos.filter((todo) => todo.completed)
+    },
+    getIncompleteTodosCount: (state) => {
+      return state.todos.filter((todo) => !todo.completed).length
+    }
   },
   actions: {
     async fetchTodos() {
@@ -30,51 +40,60 @@ export const useTodoStore = defineStore('todo', {
           },
         })
         this.todos = response.data
+        this.filteredTodos = response.data
       } catch (error) {
         console.error('Error fetching todos:', error)
       }
     },
-    async addTodo(newTodoTitle: string) {
+    
+    async addTodo(newTitle: string) {
       try {
         const response = await axios.post(API_URL, {
-          title: newTodoTitle,
+          userId: 1,
+          id: this.todos.length + 1,
+          title: newTitle,
           completed: false,
         })
-        this.todos.push(response.data)
+        this.todos.unshift(response.data)
       } catch (error) {
         console.error('Error adding todo:', error)
       }
     },
-    async updateTodoStatus(todoId: number, completed: boolean) {
+    
+    async updateTodoStatus(id: number, title: string, status: boolean) {
       try {
-        const response = await axios.patch(`${API_URL}/${todoId}`, {
-          completed,
-        })
-        const updatedTodo = response.data
-        const index = this.todos.findIndex(todo => todo.id === updatedTodo.id)
-        if (index !== -1) {
-          this.todos[index] = updatedTodo
-        }
+        const response = await axios.patch(`${API_URL}/${id}`, {
+          completed: status,
+        });
+    
+        this.todos = this.todos.map(todo =>
+          todo.id === id && todo.title === title ? { ...todo, completed: response.data.completed } : todo
+        );
       } catch (error) {
-        console.error('Error updating todo status:', error)
+        console.error('Error updating todo status:', error);
       }
-    },
-    async deleteTodo(todoId: number) {
+    },    
+    
+    async deleteTodo(id: number) {
       try {
-        await axios.delete(`${API_URL}/${todoId}`)
-        this.todos = this.todos.filter(todo => todo.id !== todoId)
+        await axios.delete(`${API_URL}/${id}`)
+        this.todos = this.todos.filter(todo => todo.id !== id)
+        this.filteredTodos = this.filteredTodos.filter(todo => todo.id!== id)
       } catch (error) {
         console.error('Error deleting todo:', error)
       }
     },
-    async clearCompleted() {
-      const completedTodoIds = this.todos.filter(todo => todo.completed).map(todo => todo.id)
-      try {
-        await Promise.all(completedTodoIds.map(id => axios.delete(`${API_URL}/${id}`)))
-        this.todos = this.todos.filter(todo => !completedTodoIds.includes(todo.id))
-      } catch (error) {
-        console.error('Error clearing completed todos:', error)
-      }
+
+    FILTER_ALL() {
+      this.filteredTodos = this.todos
+    },
+
+    FILTER_ACTIVE() {
+      this.filteredTodos = this.getActiveTodos
+    },
+
+    FILTER_COMPLETED() {
+      this.filteredTodos = this.getCompletedTodos
     },
   },
 })
