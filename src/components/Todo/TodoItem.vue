@@ -1,4 +1,7 @@
 <script setup lang="ts">
+// Vue
+import { ref } from 'vue'
+
 // Type Todo
 import { TTodo } from '../../store/todo.type'
 
@@ -9,10 +12,16 @@ interface TodoItemProps {
 }
 
 defineProps<TodoItemProps>()
+
+const hideButton = ref<boolean>(true)
 </script>
 
 <template>
-  <div class="flex bg-zinc-700 rounded-lg w-full items-center p-6">
+  <div 
+    class="flex bg-zinc-700 rounded-lg w-full items-center p-6"
+    @mouseover="hideButton = false"
+    @mouseleave="hideButton = true"
+  >
     <input 
       type="checkbox"
       @change="updateTodo(todo.id, todo.title, todo.completed)"
@@ -23,7 +32,13 @@ defineProps<TodoItemProps>()
     <div class="relative w-full">
       <label :class="['md:text-xl', 'text-gray-200', 'ml-5', { 'line-through': todo.completed }]">{{ todo.title }}</label>
       <div class="absolute top-0 right-0">
-        <button @click="deleteTodo(todo.id)" class="text-gray-200 text-2xl hover:text-rose-500 transition-colors duration-200">🗑</button>
+        <button 
+          @click="deleteTodo(todo.id)" 
+          class="text-gray-200 text-2xl hover:text-rose-500 transition-colors duration-200"
+          :class="{ 'hidden' : hideButton }"
+        >
+        <span>🗑</span>
+      </button>
       </div>
     </div>
   </div>

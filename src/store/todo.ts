@@ -7,18 +7,23 @@ import axios from 'axios'
 // Type Todo
 import { TTodo } from './todo.type'
 
+// Base URL
+import { BASE_URL } from '../config/base_url'
+
 // API URL
-const API_URL = 'https://jsonplaceholder.typicode.com/todos'
+const API_URL = BASE_URL + '/todos'
 
 export const useTodoStore = defineStore('todo', {
   state: (): {
     todos: TTodo[],
     filteredTodos: TTodo[],
     filterMode: string,
+    isLoading: boolean,
   } => ({
     todos: [],
     filteredTodos: [],
     filterMode: 'all',
+    isLoading: false,
   }),
   getters: {
     getActiveTodos: (state) => {
@@ -34,6 +39,7 @@ export const useTodoStore = defineStore('todo', {
   actions: {
     async fetchTodos() {
       try {
+        this.isLoading = true
         const response = await axios.get(API_URL, {
           params: {
             _limit: 5
@@ -41,6 +47,7 @@ export const useTodoStore = defineStore('todo', {
         })
         this.todos = response.data
         this.filteredTodos = response.data
+        this.isLoading = false
       } catch (error) {
         console.error('Error fetching todos:', error)
       }
@@ -48,6 +55,7 @@ export const useTodoStore = defineStore('todo', {
     
     async addTodo(newTitle: string) {
       try {
+        this.isLoading = true
         const response = await axios.post(API_URL, {
           userId: 1,
           id: this.todos.length + 1,
@@ -55,6 +63,8 @@ export const useTodoStore = defineStore('todo', {
           completed: false,
         })
         this.todos.unshift(response.data)
+        this.filteredTodos = this.todos
+        this.isLoading = false
       } catch (error) {
         console.error('Error adding todo:', error)
       }
@@ -85,15 +95,23 @@ export const useTodoStore = defineStore('todo', {
     },
 
     FILTER_ALL() {
+      this.filterMode = 'all'
       this.filteredTodos = this.todos
     },
 
     FILTER_ACTIVE() {
+      this.filterMode = 'active'
       this.filteredTodos = this.getActiveTodos
     },
 
     FILTER_COMPLETED() {
+      this.filterMode = 'completed'
       this.filteredTodos = this.getCompletedTodos
+    },
+
+    CLEAR_COMPLETED() {
+      this.todos = this.todos.filter(todo => !todo.completed)
+      this.filteredTodos = this.todos
     },
   },
 })

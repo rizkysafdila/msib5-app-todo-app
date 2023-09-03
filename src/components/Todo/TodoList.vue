@@ -1,11 +1,16 @@
 <script setup lang="ts">
+// Components
 import TodoItem from './TodoItem.vue'
+
+// Type Todo
 import { TTodo } from '../../store/todo.type';
 
-defineProps<{
-  todos: TTodo[],
-  store?: any,
-}>()
+interface TodoListProps {
+  todos: TTodo[]
+  store?: any
+}
+
+defineProps<TodoListProps>()
 </script>
 
 <template>

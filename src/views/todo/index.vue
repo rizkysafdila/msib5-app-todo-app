@@ -24,11 +24,16 @@ onMounted(() => {
     <div class="flex justify-between items-center mt-5">
       <p class="text-white">{{ todoStore.getIncompleteTodosCount }} Items Left</p>
       <div class="flex justify-center gap-3">
-        <TodoFilter @click="todoStore.FILTER_ALL" title="All" active />
-        <TodoFilter @click="todoStore.FILTER_ACTIVE" title="Active" />
-        <TodoFilter @click="todoStore.FILTER_COMPLETED" title="Completed" />
+        <TodoFilter @click="todoStore.FILTER_ALL" title="All" :is-active="todoStore.filterMode == 'all'" />
+        <TodoFilter @click="todoStore.FILTER_ACTIVE" title="Active" :is-active="todoStore.filterMode == 'active'" />
+        <TodoFilter @click="todoStore.FILTER_COMPLETED" title="Completed" :is-active="todoStore.filterMode == 'completed'" />
       </div>
-      <button class="text-white hover:text-rose-500 transition-colors duration-200">Clear Completed</button>
+      <button 
+        @click="todoStore.CLEAR_COMPLETED"
+        class="text-white hover:text-rose-500 transition-colors duration-200"
+      >
+        Clear Completed
+      </button>
     </div>
     <TodoList :todos="todoStore.filteredTodos" :store="todoStore" />
   </div>
