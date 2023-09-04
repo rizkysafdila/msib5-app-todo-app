@@ -65,7 +65,7 @@ export const useTodoStore = defineStore('todo', {
             completed: false,
           })
           this.todos.unshift(response.data)
-          // this.filteredTodos = this.todos
+          this.filterMode == 'active' ? this.filteredTodos = this.todos.filter(todo => !todo.completed) : this.todos.filter(todo => todo.completed)
           this.title = ''
           this.isLoading = false
         } else {
