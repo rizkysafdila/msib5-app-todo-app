@@ -1,4 +1,9 @@
-export default [
+interface MenuItem {
+  name: string;
+  url: string;
+}
+
+const menuItems: MenuItem[] = [
   {
     name: 'Home',
     url: '/'
@@ -11,4 +16,6 @@ export default [
     name: 'About',
     url: '/about'
   },
-]
+];
+
+export default menuItems;
