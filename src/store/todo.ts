@@ -4,8 +4,8 @@ import { defineStore } from 'pinia'
 // Axios
 import axios from 'axios'
 
-// Type Todo
-import { TTodo } from './todo.type'
+// Interface Todo
+import { ITodo } from './todo.type'
 
 // Base URL
 import { BASE_URL } from '../config/base_url'
@@ -15,8 +15,8 @@ const API_URL = BASE_URL + '/todos'
 
 export const useTodoStore = defineStore('todo', {
   state: (): {
-    todos: TTodo[],
-    filteredTodos: TTodo[],
+    todos: ITodo[],
+    filteredTodos: ITodo[],
     filterMode: string,
     title: string,
     isLoading: boolean,
@@ -28,11 +28,12 @@ export const useTodoStore = defineStore('todo', {
     isLoading: false,
   }),
   getters: {
-    getActiveTodos: (state) => {
-      return state.todos.filter((todo) => !todo.completed)
-    },
-    getCompletedTodos: (state) => {
-      return state.todos.filter((todo) => todo.completed)
+    getFilteredTodos: state => {
+      return state.todos.filter(todo => {
+        if (state.filterMode === 'all') return todo
+        if (state.filterMode === 'active') return !todo.completed
+        if (state.filterMode === 'completed') return todo.completed
+      })
     },
     getIncompleteTodosCount: (state) => {
       return state.todos.filter((todo) => !todo.completed).length
@@ -59,13 +60,17 @@ export const useTodoStore = defineStore('todo', {
       try {
         if (this.title !== '') {
           this.isLoading = true
-          const response = await axios.post(API_URL, {
+          await axios.post(API_URL, {
             userId: 1,
             title: this.title,
             completed: false,
           })
-          this.todos.unshift(response.data)
-          this.filterMode == 'active' ? this.filteredTodos = this.todos.filter(todo => !todo.completed) : this.todos.filter(todo => todo.completed)
+          const newTodo = {
+            id: Math.random(),
+            title: this.title,
+            completed: false,
+          }
+          this.todos = [newTodo, ...this.todos]
           this.title = ''
           this.isLoading = false
         } else {
@@ -73,6 +78,9 @@ export const useTodoStore = defineStore('todo', {
         }
       } catch (error) {
         console.error('Error adding todo:', error)
+        return Promise.reject(error)
+      } finally {
+        this.isLoading = false
       }
     },
     
@@ -100,19 +108,8 @@ export const useTodoStore = defineStore('todo', {
       }
     },
 
-    FILTER_ALL() {
-      this.filterMode = 'all'
-      this.filteredTodos = this.todos
-    },
-
-    FILTER_ACTIVE() {
-      this.filterMode = 'active'
-      this.filteredTodos = this.getActiveTodos
-    },
-
-    FILTER_COMPLETED() {
-      this.filterMode = 'completed'
-      this.filteredTodos = this.getCompletedTodos
+    SET_FILTER(filter: 'all' | 'active' | 'completed') {
+      this.filterMode = filter
     },
 
     CLEAR_COMPLETED() {

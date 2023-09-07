@@ -2,11 +2,11 @@
 // Components
 import TodoItem from './TodoItem.vue'
 
-// Type Todo
-import { TTodo } from '../../store/todo.type';
+// Interface Todo
+import { ITodo } from '../../store/todo.type';
 
 interface TodoListProps {
-  todos: TTodo[]
+  todos: ITodo[]
   store?: any
 }
 

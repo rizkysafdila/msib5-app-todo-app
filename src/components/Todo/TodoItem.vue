@@ -2,11 +2,11 @@
 // Vue
 import { ref } from 'vue'
 
-// Type Todo
-import { TTodo } from '../../store/todo.type'
+// Interface Todo
+import { ITodo } from '../../store/todo.type';
 
 interface TodoItemProps {
-  todo: TTodo,
+  todo: ITodo,
   updateTodo: (id: number, title: string, completed: boolean) => void,
   deleteTodo: (id: number) => void
 }

@@ -1,12 +1,12 @@
-interface MenuItem {
+interface IMenuItem {
   name: string;
   url: string;
 }
 
-const menuItems: MenuItem[] = [
+const menuItems: IMenuItem[] = [
   {
     name: 'Home',
-    url: '/'
+    url: '/home'
   },
   {
     name: 'Todos',

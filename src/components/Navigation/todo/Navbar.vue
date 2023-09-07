@@ -10,7 +10,7 @@ import menuItems from './menus'
         <li class="flex md:gap-40 md:text-lg font-medium">
           <div class="py-2" v-for="menu in menuItems">
             <router-link :to="menu.url"
-              class="text-white px-6 py-2 rounded-lg hover:text-emerald-500 transition-colors duration-200">
+              class="text-white px-6 py-2 rounded-lg hover:text-emerald-500 transition-colors duration-200" active-class="link-active">
               <span>{{ menu.name }}</span>
             </router-link>
           </div>
