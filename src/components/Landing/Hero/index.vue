@@ -5,7 +5,7 @@
 <template>
   <section>
     <div class="grid container mx-auto lg:gap-8 xl:gap-0 py-12 lg:py-24 lg:grid-cols-12 px-8">
-      <div class="order-2 md:order-1 mr-auto place-self-center lg:col-span-6">
+      <div class="order-2 lg:order-1 mr-auto place-self-center lg:col-span-6">
         <h1 class="max-w-2xl mb-6 text-4xl font-semibold text-gray-900 tracking-tight md:text-5xl xl:text-6xl">
           Welcome to GITS Commerce
         </h1>

@@ -5,7 +5,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 // Interface Todo
-import { ITodo } from './todo.type'
+import { ITodo } from '../types/todo.type'
 
 // Base URL
 import { BASE_URL } from '../config/base_url'

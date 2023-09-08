@@ -11,6 +11,25 @@ import ProductCard from '../Cards/ProductCard.vue'
 
 // Products Data
 import products from '../Cards/products'
+
+const breakpoints = {
+  480: {
+    slidesPerView: 2,
+    spaceBetween: 24
+  },
+  640: {
+    slidesPerView: 3,
+    spaceBetween: 24
+  },
+  1024: {
+    slidesPerView: 4,
+    spaceBetween: 24
+  },
+  1440: {
+    slidesPerView: 5,
+    spaceBetween: 24
+  },
+}
 </script>
 
 <template>
@@ -22,10 +41,10 @@ import products from '../Cards/products'
         </template>
       </SectionHeader>
       <div class="relative flex flex-wrap md:items-center gap-3 lg:gap-6">
-        <button class="md:absolute md:z-10 md:-end-6 md:top-1/2 text-white bg-black opacity-30 p-2 rounded-full">
+        <button class="absolute z-10 -end-6 top-1/2 text-white bg-black opacity-30 p-2 rounded-full">
           <IconChevronRight :size="32" />
         </button>
-        <Swiper :slides-per-view="5" :space-between="24" :mousewheel="true">
+        <Swiper :slides-per-view="1" :space-between="24" :breakpoints="breakpoints" :mousewheel="true">
           <SwiperSlide v-for="product in products" :key="product.title">
             <ProductCard :data="product" />
           </SwiperSlide>

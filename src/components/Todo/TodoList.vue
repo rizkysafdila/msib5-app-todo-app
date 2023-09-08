@@ -3,7 +3,7 @@
 import TodoItem from './TodoItem.vue'
 
 // Interface Todo
-import { ITodo } from '../../store/todo.type';
+import { ITodo } from '../../types/todo.type';
 
 interface TodoListProps {
   todos: ITodo[]

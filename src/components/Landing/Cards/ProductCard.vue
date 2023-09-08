@@ -18,7 +18,7 @@ const priceAfterDiscount = computed(() => {
 </script>
 
 <template>
-  <div class="w-[224px] flex flex-col bg-white border border-gray-200 rounded-lg">
+  <div class="md:w-[222px] xl:w-[224px] flex flex-col bg-white border border-gray-200 rounded-lg">
     <router-link to="#">
       <div class="bg-gray-100 w-full flex justify-center items-center rounded-t-lg">
         <img class="rounded-t-lg" :src="`src/assets/images/products/${data.fileName}.png`" alt="Bottle" />

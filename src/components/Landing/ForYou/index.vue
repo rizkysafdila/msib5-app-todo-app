@@ -9,10 +9,10 @@ import products from '../Cards/products'
 
 <template>
   <section class="bg-white">
-    <div class="max-w-screen-xl mx-auto lg:gap-8 xl:gap-0 lg:py-24 px-8">
+    <div class="container mx-auto lg:gap-8 xl:gap-0 py-12 lg:py-24 px-8">
       <SectionHeader title="For You" button-url="#" />
-      <div class="flex flex-wrap md:flex-row md:items-center gap-3 lg:gap-6">
-        <div v-for="product in products" :key="product.title">
+      <div class="flex flex-wrap md:items-center gap-3 lg:gap-6">
+        <div class="min-w-full md:min-w-min" v-for="product in products" :key="product.title">
           <ProductCard :data="product" />
         </div>
       </div>

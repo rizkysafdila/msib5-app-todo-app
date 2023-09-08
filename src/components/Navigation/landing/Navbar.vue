@@ -9,7 +9,7 @@ import { IconMenu2 } from '@tabler/icons-vue'
 
 <template>
   <nav class="w-full">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-8">
+    <div class="container flex flex-wrap items-center justify-between mx-auto p-8">
       <div class="flex items-center gap-10">
         <router-link to="/" class="flex items-center gap-2.5">
           <img src="@/assets/images/logos/Logomark.svg" class="h-8" alt="GITS ID">
@@ -31,12 +31,12 @@ import { IconMenu2 } from '@tabler/icons-vue'
         </div>
       </div>
       <div class="flex md:order-2">
-        <div class="flex gap-3">
-          <router-link to="#" class="text-gray-600 font-semibold px-[18px] py-[14px] rounded-lg hover:bg-white transition-colors duration-200">
+        <div class="hidden md:flex gap-3">
+          <router-link to="#" class="text-gray-600 font-semibold px-[18px] py-3.5 rounded-lg hover:bg-white transition-colors duration-200">
             Log in
           </router-link>
           <router-link to="#"
-            class="text-white font-semibold px-[18px] py-[14px] rounded-lg bg-primary-600 hover:bg-primary-700 transition-colors duration-200">
+            class="text-white font-semibold px-[18px] py-3.5 rounded-lg bg-primary-600 hover:bg-primary-700 transition-colors duration-200">
             Sign Up
           </router-link>
         </div>

@@ -9,6 +9,7 @@ import FlashSale from '../../components/Landing/FlashSale/index.vue'
 import LatestProduct from '../../components/Landing/LatestProduct/index.vue'
 import Promo from '../../components/Landing/Promo/index.vue'
 import ForYou from '../../components/Landing/ForYou/index.vue'
+import Newsletter from '../../components/Landing/Newsletter/index.vue'
 import Footer from '../../components/Landing/Footer/index.vue'
 </script>
 
@@ -21,6 +22,7 @@ import Footer from '../../components/Landing/Footer/index.vue'
     <Promo />
     <LatestProduct />
     <ForYou />
+    <Newsletter />
     <Footer />
   </LandingLayout>
 </template>

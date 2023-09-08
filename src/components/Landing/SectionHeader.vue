@@ -17,7 +17,7 @@ defineProps<ISectionHeaderProps>();
       <slot name="timer"></slot>
     </div>
     <slot name="button">
-      <router-link :to="buttonUrl" class="flex gap-3 text-primary-700 text-lg font-semibold">
+      <router-link :to="buttonUrl" class="flex gap-3 text-primary-700 hover:text-primary-800 transition-colors text-lg font-semibold">
         <span>View All</span>
         <IconArrowRight />
       </router-link>
