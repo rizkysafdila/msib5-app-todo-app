@@ -18,7 +18,7 @@ import socials from './socials'
           Design amazing digital experiences that create more happy in the world.
         </p>
       </div>
-      <div class="flex flex-col mt-12" v-for="link in footerLinks" :key="link.title">
+      <div v-for="link in footerLinks" :key="link.title">
         <h6 class="text-gray-300 text-sm font-semibold mb-4">{{ link.title }}</h6>
         <ul class="flex flex-col gap-3">
           <li v-for="item in link.links">

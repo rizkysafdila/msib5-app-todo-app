@@ -3,6 +3,7 @@ interface IFooterLink {
   links: {
     label: string
     url: string
+    isNew?: boolean
   }[]
 }
 
@@ -21,6 +22,7 @@ const footerLinks: IFooterLink[] = [
       {
         label: 'Solutions',
         url: '#',
+        isNew: true,
       },
       {
         label: 'Tutorial',
